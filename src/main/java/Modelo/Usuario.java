@@ -1,9 +1,10 @@
 package Modelo;
 
 import java.time.LocalDate;
-
+import org.bson.types.ObjectId;
 public class Usuario {
-
+    
+    private ObjectId id;
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
@@ -26,7 +27,14 @@ public class Usuario {
         this.nombreUsusario = nombreUsusario;
         this.contrasenia = contrasenia;
     }
+    
+        public ObjectId getId() {
+        return id;
+    }
 
+    public void setId(ObjectId id) {
+        this.id = id;
+    }
     public String getNombre() {
         return nombre;
     }
