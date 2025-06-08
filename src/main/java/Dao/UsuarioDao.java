@@ -12,6 +12,8 @@ import java.util.List;
 import java.time.LocalDate;
 import org.bson.types.ObjectId;
 
+import javax.websocket.Session;
+
 
 public class UsuarioDao {
 
@@ -29,7 +31,7 @@ public class UsuarioDao {
 
 
         Document doc = new Document("nombre", usuario.getNombre()).append("apellidoPaterno", usuario.getApellidoPaterno()).append("apellidoMaterno", usuario.getApellidoMaterno()).append("" +
-                "fechaNacimiento", usuario.getFechaNacimiento()).append("correo", usuario.getCorreo()).append("nombreUsuario", usuario.getNombreUsusario()).append("contrasenia", usuario.getContrasenia());
+                "fechaNacimiento", usuario.getFechaNacimiento()).append("correo", usuario.getCorreo()).append("contrasenia", usuario.getContrasenia());
         coleccion.insertOne(doc);
     }
 
@@ -46,7 +48,7 @@ public class UsuarioDao {
             }
 
             Usuario usuario = new Usuario(doc.getString("nombre"), doc.getString("apellidoPaterno"), doc.getString("apellidoMaterno"),
-                    fechaNacimiento, doc.getString("correo"), doc.getString("nombreUsuario"), doc.getString("contrasenia"));
+                    fechaNacimiento, doc.getString("correo"), doc.getString("contrasenia"));
             usuario.setId(doc.getObjectId("_id"));
             lista.add(usuario);
         }
@@ -59,7 +61,7 @@ public class UsuarioDao {
     public void actualizarUsuario(Usuario usuario) {
         Document filtro = new Document("nombre", usuario.getNombre());
         Document nuevo = new Document("$set", new Document("nombre", usuario.getNombre()).append("apelleidoPaterno", usuario.getApellidoPaterno()).append("apellidoMaterno", usuario.getApellidoMaterno()).append("" +
-                "fechaNacimiento", usuario.getFechaNacimiento()).append("correo", usuario.getCorreo()).append("nombreUsusario", usuario.getNombreUsusario()).append("contrasenia", usuario.getContrasenia()));
+                "fechaNacimiento", usuario.getFechaNacimiento()).append("correo", usuario.getCorreo()).append("contrasenia", usuario.getContrasenia()));
         coleccion.updateOne(filtro, nuevo);
     }
 
@@ -83,7 +85,6 @@ public class UsuarioDao {
                     doc.getString("apellidoMaterno"),
                     fechaNacimiento,
                     doc.getString("correo"),
-                    doc.getString("nombreUsuario"), // <- corregido
                     doc.getString("contrasenia")
             );
             usuario.setId(doc.getObjectId("_id"));
@@ -98,5 +99,14 @@ public class UsuarioDao {
         Document filtro = new Document("_id", new ObjectId(id));
         coleccion.deleteOne(filtro);
     }
+
+    public boolean validarInicio(String emaillogin, String password) {
+        Document filtro = new Document("correo", emaillogin).append("contrasenia", password);
+        Document doc = coleccion.find(filtro).first();
+        return doc != null;
+    }
+
+
+
 }
 

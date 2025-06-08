@@ -183,7 +183,7 @@
             </div>
             
             <div class="d-grid gap-2">
-                <a href="login.jsp" class="btn btn-login btn-custom">
+                <a href="../src/main/webapp/login.jsp" class="btn btn-login btn-custom">
                     <i class="fas fa-sign-in-alt me-2"></i>Iniciar Sesión
                 </a>
                 <a href="registro.jsp" class="btn btn-register btn-custom">

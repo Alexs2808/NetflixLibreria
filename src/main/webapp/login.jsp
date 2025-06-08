@@ -53,7 +53,7 @@
     </style>
 </head>
 <body>
-<a href="insertarusuario.jsp.jsp"></a>
+<a href="index.jsp"></a>
 <div class="container">
     <div class="form-container sign-up">
         <form action="MongoServlet" method="get">
@@ -70,8 +70,8 @@
             <label>Fecha de nacimiento:</label>
             <input type="datetime-local" name="fechaNacimiento" required>
 
-            <label for="email">Correo:</label>
-            <input type="email" id="email" name="email" required><br><br>
+            <label for="correo">Correo:</label>
+            <input type="email" id="correo" name="correo" required><br><br>
 
             <label for="contrasenia">Contrase&ntilde;a:</label>
             <input type="password" id="contrasenia" name="contrasenia" required><br><br>
@@ -81,62 +81,63 @@
         </form>
     </div>
 </div>
-<div class="form-container sign-in">
-    <div class="row justify-content-center align-items-center min-vh-100">
-        <div class="col-md-6 col-lg-5">
-            <div class="login-card">
-                <div class="login-header">
-                    <i class="bi bi-person-circle display-1 mb-3"></i>
-                    <h2>Iniciar Sesión</h2>
-                    <p class="mb-0">Ingrese sus Datos</p>
-                </div>
-                <div class="login-body">
-                    <form>
-                        <div class="mb-3">
-                            <label for="emaillogin" class="form-label">Correo Electrónico</label>
-                            <div class="input-group">
+
+    <div class="form-container sign-in">
+        <div class="row justify-content-center align-items-center min-vh-100">
+            <div class="col-md-6 col-lg-5">
+                <div class="login-card">
+                    <div class="login-header">
+                        <i class="bi bi-person-circle display-1 mb-3"></i>
+                        <h2>Iniciar Sesión</h2>
+                        <p class="mb-0">Ingrese sus Datos</p>
+                    </div>
+                    <div class="login-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="emaillogin" class="form-label">Correo Electrónico</label>
+                                <div class="input-group">
                                     <span class="input-group-text">
                                         <i class="bi bi-envelope"></i>
                                     </span>
-                                <input type="email" class="form-control" id="emaillogin" placeholder="usuario@ejemplo.com" required>
+                                    <input type="email" class="form-control" id="emaillogin" placeholder="usuario@ejemplo.com" required>
+                                </div>
                             </div>
-                        </div>
-                        <div class="mb-4">
-                            <label for="password" class="form-label">Contraseña</label>
-                            <div class="input-group">
+                            <div class="mb-4">
+                                <label for="password" class="form-label">Contraseña</label>
+                                <div class="input-group">
                                     <span class="input-group-text">
                                         <i class="bi bi-lock"></i>
                                     </span>
-                                <input type="password" class="form-control" id="password" placeholder="••••••••" required>
-                                <button class="btn btn-outline-secondary" type="button" id="togglePassword">
-                                    <i class="bi bi-eye"></i>
-                                </button>
+                                    <input type="password" class="form-control" id="password" placeholder="••••••••" required>
+                                    <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                        <div class="d-grid mb-3">
-                            <button type="submit" class="btn btn-primary btn-login btn-lg">Iniciar Sesión</button>
-                        </div>
-                        <div class="text-center mt-3">
-                            <a href="#" class="link-secondary text-decoration-none">Registrarse</a>
-                        </div>
-                    </form>
+                            <div class="d-grid mb-3">
+                                <button type="submit" class="btn btn-primary btn-login btn-lg">Iniciar Sesión</button>
+                            </div>
+                            <div class="text-center mt-3">
+                                <a href="#" class="link-secondary text-decoration-none">Registrarse</a>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Bootstrap JS Bundle -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- Script para mostrar/ocultar contraseña -->
-<script>
-    document.getElementById('togglePassword').addEventListener('click', function() {
-        const password = document.getElementById('password');
-        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-        password.setAttribute('type', type);
-        this.innerHTML = type === 'password' ? '<i class="bi bi-eye"></i>' : '<i class="bi bi-eye-slash"></i>';
-    });
-</script>
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Script para mostrar/ocultar contraseña -->
+    <script>
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const password = document.getElementById('password');
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            this.innerHTML = type === 'password' ? '<i class="bi bi-eye"></i>' : '<i class="bi bi-eye-slash"></i>';
+        });
+    </script>
 </body>
 </html>

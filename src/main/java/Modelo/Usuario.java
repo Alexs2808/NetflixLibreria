@@ -12,7 +12,6 @@ public class Usuario {
     private String apellidoMaterno;
     private LocalDateTime fechaNacimiento;
     private String correo;
-    private String nombreUsusario;
     private String contrasenia;
 
     public Usuario() {
@@ -20,13 +19,12 @@ public class Usuario {
     }
 
     public Usuario(String nombre, String apellidoPaterno, String apellidoMaterno,
-                   LocalDateTime fechaNacimiento, String correo, String nombreUsusario, String contrasenia) {
+                   LocalDateTime fechaNacimiento, String correo,String contrasenia) {
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.fechaNacimiento = fechaNacimiento;
         this.correo = correo;
-        this.nombreUsusario = nombreUsusario;
         this.contrasenia = contrasenia;
     }
     
@@ -78,13 +76,6 @@ public class Usuario {
         this.correo = correo;
     }
 
-    public String getNombreUsusario() {
-        return nombreUsusario;
-    }
-
-    public void setNombreUsusario(String nombreUsusario) {
-        this.nombreUsusario = nombreUsusario;
-    }
 
     public String getContrasenia() {
         return contrasenia;
@@ -102,7 +93,6 @@ public class Usuario {
                 ", apellidoMaterno='" + apellidoMaterno + '\'' +
                 ", fechaNacimiento=" + fechaNacimiento +
                 ", correo='" + correo + '\'' +
-                ", nombreUsusario='" + nombreUsusario + '\'' +
                 ", contrasenia='" + contrasenia + '\'' +
                 '}';
     }

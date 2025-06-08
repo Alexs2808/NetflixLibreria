@@ -59,7 +59,6 @@ public class UsuarioServlet extends HttpServlet {
             u.setApellidoMaterno(req.getParameter("apellidoMaterno"));
             u.setFechaNacimiento(fechaNacimiento);
             u.setCorreo(req.getParameter("correo"));
-            u.setNombreUsusario(req.getParameter("nombreUsusario"));
             u.setContrasenia(req.getParameter("contrasenia"));
             dao.insertUsuario(u);
             resp.sendRedirect("UsuarioServlet");
@@ -72,7 +71,6 @@ public class UsuarioServlet extends HttpServlet {
             u.setApellidoMaterno(req.getParameter("apellidoMaterno"));
             u.setFechaNacimiento(fechaNacimiento);
             u.setCorreo(req.getParameter("correo"));
-            u.setNombreUsusario(req.getParameter("nombreUsusario"));
             u.setContrasenia(req.getParameter("contrasenia"));
             dao.actualizarUsuario(u);
             resp.sendRedirect("UsuarioServlet");
