@@ -4,14 +4,17 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+
+    <servlet>
+        <servlet-name>usuarioServlet</servlet-name>
+        <servlet-class>Controlador.UsuarioServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>usuarioServlet</servlet-name>
+        <url-pattern>/UsuarioServlet</url-pattern>
+    </servlet-mapping>
+
+
 </web-app>
 
-<servlet>
-    <servlet-name>UsuarioServlet</servlet-name>
-    <servlet-class>Controlador.UsuarioServlet</servlet-class>
-</servlet>
-
-<servlet-mapping>
-    <servlet-name>UsuarioServlet</servlet-name>
-    <url-pattern>/UsuarioServlet</url-pattern>
-</servlet-mapping>

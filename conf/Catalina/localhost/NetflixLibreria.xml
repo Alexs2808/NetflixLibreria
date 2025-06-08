@@ -7,5 +7,7 @@
     <PostResources base="C:/Users/Alexs/.m2/repository/org/mongodb/bson/4.11.1/bson-4.11.1.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/bson-4.11.1.jar"/>
     <PostResources base="C:/Users/Alexs/.m2/repository/org/mongodb/mongodb-driver-core/4.11.1/mongodb-driver-core-4.11.1.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/mongodb-driver-core-4.11.1.jar"/>
     <PostResources base="C:/Users/Alexs/.m2/repository/org/mongodb/bson-record-codec/4.11.1/bson-record-codec-4.11.1.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/bson-record-codec-4.11.1.jar"/>
+    <PostResources base="C:/Users/Alexs/.m2/repository/org/slf4j/slf4j-api/2.0.13/slf4j-api-2.0.13.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/slf4j-api-2.0.13.jar"/>
+    <PostResources base="C:/Users/Alexs/.m2/repository/org/slf4j/slf4j-simple/2.0.13/slf4j-simple-2.0.13.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/slf4j-simple-2.0.13.jar"/>
   </Resources>
 </Context>

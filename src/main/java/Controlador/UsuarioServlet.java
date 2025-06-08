@@ -11,6 +11,9 @@ import Modelo.Usuario;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import org.bson.types.ObjectId;
 
@@ -19,7 +22,7 @@ public class UsuarioServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String accion = req.getParameter("accion");
+       /* String accion = req.getParameter("accion");
 
         if ("ver".equals(accion)) {
             String id = req.getParameter("id");
@@ -37,17 +40,27 @@ public class UsuarioServlet extends HttpServlet {
             List<Usuario> lista = dao.listarUsuarios();
             req.setAttribute("usuarios", lista);
             req.getRequestDispatcher("/listarUsuarios.jsp").forward(req, resp);
-        }
+        }*/
+        resp.sendRedirect("index.jsp");
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String fechaStr = req.getParameter("fechaNacimiento");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        LocalDateTime fechaNacimiento = LocalDateTime.parse(fechaStr, formatter);
+
         String accion = req.getParameter("accion");
 
         if ("insertar".equals(accion)) {
             Usuario u = new Usuario();
             u.setNombre(req.getParameter("nombre"));
+            u.setApellidoPaterno(req.getParameter("apellidoPaterno"));
+            u.setApellidoMaterno(req.getParameter("apellidoMaterno"));
+            u.setFechaNacimiento(fechaNacimiento);
             u.setCorreo(req.getParameter("correo"));
+            u.setNombreUsusario(req.getParameter("nombreUsusario"));
+            u.setContrasenia(req.getParameter("contrasenia"));
             dao.insertUsuario(u);
             resp.sendRedirect("UsuarioServlet");
 
@@ -55,7 +68,12 @@ public class UsuarioServlet extends HttpServlet {
             Usuario u = new Usuario();
             u.setId(new ObjectId("id"));
             u.setNombre(req.getParameter("nombre"));
+            u.setApellidoPaterno(req.getParameter("apellidoPaterno"));
+            u.setApellidoMaterno(req.getParameter("apellidoMaterno"));
+            u.setFechaNacimiento(fechaNacimiento);
             u.setCorreo(req.getParameter("correo"));
+            u.setNombreUsusario(req.getParameter("nombreUsusario"));
+            u.setContrasenia(req.getParameter("contrasenia"));
             dao.actualizarUsuario(u);
             resp.sendRedirect("UsuarioServlet");
         }

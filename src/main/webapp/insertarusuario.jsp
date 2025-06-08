@@ -17,9 +17,24 @@
         <label>Nombre:</label><br>
         <input type="text" name="nombre" required><br><br>
 
-        <label>Correo:</label><br>
-        <input type="email" name="correo" required><br><br>
-        
+        <label>Apellido paterno:</label>
+        <input type="text" name="apellidoPaterno" required>
+
+        <label>Apellido materno:</label>
+        <input type="text" name="apellidoMaterno" required>
+
+        <label>Fecha de nacimiento:</label>
+        <input type="text" name="fechaNacimiento" required>
+
+        <label>Correo:</label>
+        <input type="text" name="correo" required>
+
+        <label>Nombre de usuario:</label>
+        <input type="text" name="nombreUsuario" required>
+
+        <label>Contraseña:</label>
+        <input type="text" name="contrasenia" required>
+
         <input type="submit" value="Registrar">
     </form>
 

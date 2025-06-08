@@ -4,7 +4,10 @@ import Modelo.Usuario;
 import com.mongodb.client.*;
 import org.bson.Document;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.time.LocalDate;
 import org.bson.types.ObjectId;
@@ -22,8 +25,11 @@ public class UsuarioDao {
 
     //Creacion de usuario
     public void insertUsuario(Usuario usuario) {
-        Document doc = new Document("nombre", usuario.getNombre()).append("apelleidoPaterno", usuario.getApellidoPaterno()).append("apellidoMaterno", usuario.getApellidoMaterno()).append("" +
-                "fechaNacimiento", usuario.getFechaNacimiento()).append("correo", usuario.getCorreo()).append("nombreUsusario", usuario.getNombreUsusario()).append("contrasenia", usuario.getContrasenia());
+        Date fecha = Date.from(usuario.getFechaNacimiento().atZone(ZoneId.systemDefault()).toInstant());
+
+
+        Document doc = new Document("nombre", usuario.getNombre()).append("apellidoPaterno", usuario.getApellidoPaterno()).append("apellidoMaterno", usuario.getApellidoMaterno()).append("" +
+                "fechaNacimiento", usuario.getFechaNacimiento()).append("correo", usuario.getCorreo()).append("nombreUsuario", usuario.getNombreUsusario()).append("contrasenia", usuario.getContrasenia());
         coleccion.insertOne(doc);
     }
 
@@ -31,8 +37,18 @@ public class UsuarioDao {
     public List<Usuario> listarUsuarios() {
         List<Usuario> lista = new ArrayList<>();
         for (Document doc : coleccion.find()) {
-            lista.add(new Usuario(doc.getString("nombre"), doc.getString("apellidoPaterno"), doc.getString("apellidoMaterno"),
-                    doc.getDate("fechaNacimiento").toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate(), doc.getString("correo"), doc.getString("nombreUsuario"), doc.getString("contrasenia")));
+
+            Date fecha = doc.getDate("fechaNacimiento");
+
+            LocalDateTime fechaNacimiento = null;
+            if (fecha != null) {
+                fechaNacimiento = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+            }
+
+            Usuario usuario = new Usuario(doc.getString("nombre"), doc.getString("apellidoPaterno"), doc.getString("apellidoMaterno"),
+                    fechaNacimiento, doc.getString("correo"), doc.getString("nombreUsuario"), doc.getString("contrasenia"));
+            usuario.setId(doc.getObjectId("_id"));
+            lista.add(usuario);
         }
         return lista;
     }
@@ -48,7 +64,7 @@ public class UsuarioDao {
     }
 
 public Usuario obtenerUsuarioPorId(String id) {
-    Document filtro = new Document("_id", new ObjectId(id));
+    /*Document filtro = new Document("_id", new ObjectId(id));
     Document doc = coleccion.find(filtro).first();
 
     if (doc != null) {
@@ -63,8 +79,8 @@ public Usuario obtenerUsuarioPorId(String id) {
         );
         usuario.setId(doc.getObjectId("_id"));
         return usuario;
-    } else {
+    } else {*/
         return null;
     }
 }
-}
+

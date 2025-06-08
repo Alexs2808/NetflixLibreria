@@ -1,6 +1,8 @@
 package Modelo;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import org.bson.types.ObjectId;
 public class Usuario {
     
@@ -8,7 +10,7 @@ public class Usuario {
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
-    private LocalDate fechaNacimiento;
+    private LocalDateTime fechaNacimiento;
     private String correo;
     private String nombreUsusario;
     private String contrasenia;
@@ -18,7 +20,7 @@ public class Usuario {
     }
 
     public Usuario(String nombre, String apellidoPaterno, String apellidoMaterno,
-                   LocalDate fechaNacimiento, String correo, String nombreUsusario, String contrasenia) {
+                   LocalDateTime fechaNacimiento, String correo, String nombreUsusario, String contrasenia) {
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
@@ -59,11 +61,11 @@ public class Usuario {
         this.apellidoMaterno = apellidoMaterno;
     }
 
-    public LocalDate getFechaNacimiento() {
+    public LocalDateTime getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+    public void setFechaNacimiento(LocalDateTime fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
