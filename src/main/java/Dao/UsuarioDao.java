@@ -7,6 +7,7 @@ import org.bson.Document;
 import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
+import org.bson.types.ObjectId;
 
 
 public class UsuarioDao {
@@ -46,5 +47,24 @@ public class UsuarioDao {
         coleccion.updateOne(filtro, nuevo);
     }
 
+public Usuario obtenerUsuarioPorId(String id) {
+    Document filtro = new Document("_id", new ObjectId(id));
+    Document doc = coleccion.find(filtro).first();
 
+    if (doc != null) {
+        Usuario usuario = new Usuario(
+            doc.getString("nombre"),
+            doc.getString("apellidoPaterno"), // <- corregido
+            doc.getString("apellidoMaterno"),
+            doc.getDate("fechaNacimiento").toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate(),
+            doc.getString("correo"),
+            doc.getString("nombreUsuario"), // <- corregido
+            doc.getString("contrasenia")
+        );
+        usuario.setId(doc.getObjectId("_id"));
+        return usuario;
+    } else {
+        return null;
+    }
+}
 }
