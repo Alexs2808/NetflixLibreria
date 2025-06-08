@@ -1,0 +1,628 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookFlix - Tu Perfil</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        /* Todo el CSS original permanece igual */
+        :root {
+            --bookflix-primary: #210F37;
+            --bookflix-secondary: #4F1C51;
+            --bookflix-dark: #1a1a2e;
+            --bookflix-light: #C8ACD6;
+        }
+        
+        body {
+            background-color: #1A1A1D;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .bookflix-bg {
+            background: linear-gradient(135deg, var(--bookflix-primary), var(--bookflix-secondary));
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.8rem;
+            letter-spacing: -0.5px;
+        }
+        
+        .sidebar {
+            background-color: #3B1C32;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+            padding: 20px 0;
+            height: calc(100vh - 90px);
+            position: sticky;
+            top: 85px;
+        }
+        
+        .main-content {
+            background-color: #3B1C32;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+            min-height: calc(100vh - 90px);
+        }
+        
+        .sidebar .nav-link {
+            padding: 12px 25px;
+            color: white;
+            font-weight: 500;
+            border-left: 4px solid transparent;
+            transition: all 0.3s;
+            margin: 5px 15px;
+            border-radius: 4px;
+        }
+        
+        .sidebar .nav-link:hover, .sidebar .nav-link.active {
+            background-color: #DCA06D;
+            color: var(--bookflix-primary);
+            border-left: 4px solid var(--bookflix-primary);
+        }
+        
+        .sidebar .nav-link i {
+            margin-right: 10px;
+            font-size: 1.1rem;
+            width: 24px;
+            text-align: center;
+        }
+        
+        .profile-header {
+            background: linear-gradient(135deg, var(--bookflix-primary), var(--bookflix-secondary));
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .profile-header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,100 L0,100 Z" fill="rgba(255,255,255,0.05)"/></svg>');
+            background-size: cover;
+        }
+        
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid white;
+            background: linear-gradient(135deg, #8C3061, #C63C51);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 0 auto 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .profile-stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            color: white;
+        }
+        
+        .stats-card {
+            border-radius: 10px;
+            padding: 20px;
+            color: white;
+            margin-bottom: 20px;
+        }
+        
+        .stats-favorites {
+            background: linear-gradient(135deg, #8C3061, #C63C51);
+        }
+        
+        .stats-finished {
+            background: linear-gradient(135deg, #243642, #387478);
+        }
+        
+        .stats-to-read {
+            background: linear-gradient(135deg, #824D74, #BE7B72);
+        }
+        
+        .stats-goal {
+            background: linear-gradient(135deg, #4F1C51, #824D74);
+        }
+        
+        .section-title {
+            position: relative;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            color: white;
+        }
+        
+        .section-title:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 4px;
+            background: var(--bookflix-primary);
+            border-radius: 2px;
+        }
+        
+        .reading-goal {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .progress-container {
+            margin-top: 15px;
+        }
+        
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .progress {
+            height: 10px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .progress-bar-custom {
+            background: linear-gradient(90deg, #4ecdc4, #387478);
+        }
+        
+        .badge-custom {
+            background-color: #A55B4B;
+            color: white;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 20px;
+        }
+        
+        .form-control-custom {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 8px;
+            padding: 10px 15px;
+        }
+        
+        .form-control-custom:focus {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-color: var(--bookflix-light);
+            color: white;
+            box-shadow: 0 0 0 0.2rem rgba(200, 172, 214, 0.25);
+        }
+        
+        .form-label {
+            color: #C8ACD6;
+            font-weight: 500;
+        }
+        
+        .btn-save {
+            background: linear-gradient(135deg, var(--bookflix-primary), var(--bookflix-secondary));
+            color: white;
+            border: none;
+            font-weight: 600;
+            padding: 10px 25px;
+            border-radius: 50px;
+            transition: all 0.3s;
+        }
+        
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .recent-activity {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .recent-activity li {
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .recent-activity li:last-child {
+            border-bottom: none;
+        }
+        
+        .activity-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .activity-content {
+            flex-grow: 1;
+        }
+        
+        .activity-time {
+            font-size: 0.8rem;
+            color: #C8ACD6;
+            margin-top: 5px;
+        }
+        
+        .book-mini-card {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        
+        .book-mini-cover {
+            width: 50px;
+            height: 70px;
+            border-radius: 5px;
+            background-size: cover;
+            margin-right: 10px;
+        }
+        
+        .book-mini-info {
+            flex-grow: 1;
+        }
+        
+        .book-mini-title {
+            font-weight: 600;
+            margin-bottom: 0;
+            font-size: 0.9rem;
+        }
+        
+        .book-mini-author {
+            font-size: 0.8rem;
+            color: #C8ACD6;
+            margin-bottom: 0;
+        }
+        
+        .theme-selector {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .theme-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .theme-option:hover {
+            transform: scale(1.1);
+        }
+        
+        .theme-option.active {
+            border-color: white;
+            transform: scale(1.1);
+        }
+        
+        .theme-purple {
+            background: linear-gradient(135deg, #210F37, #4F1C51);
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra de navegación superior -->
+    <nav class="navbar navbar-expand-lg navbar-dark bookflix-bg shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="logo.png" alt="BookFlix Logo" height="50" class="me-2">
+                BookFlix
+            </a>
+
+            <div class="d-flex align-items-center">
+                <div class="input-group search-bar me-3">
+                    <input type="text" class="form-control border-0" placeholder="Buscar libros...">
+                    <button class="btn" type="button"><i class="bi bi-search"></i></button>
+                </div>
+                
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle text-white d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
+                        <div class="user-avatar me-2">${not empty sessionScope.usuario ? sessionScope.usuario.charAt(0) : 'U'}</div>
+                        <span>${sessionScope.usuario != null ? sessionScope.usuario : 'Usuario'}</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Perfil</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Configuración</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-box-arrow-right me-2"></i>Cerrar sesión</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid py-4">
+        <div class="row">
+            <!-- Menú lateral -->
+            <div class="col-lg-2">
+                <div class="sidebar">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="bi bi-house-door"></i> Home
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">
+                                <i class="bi bi-person-fill"></i> Perfil
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="bi bi-check-circle"></i> Terminados
+                                <span class="badge bg-primary float-end mt-1">${totalTerminados}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="bi bi-heart"></i> Favoritos
+                                <span class="badge bg-danger float-end mt-1">${totalFavoritos}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="bi bi-bookmark"></i> Por Leer
+                                <span class="badge bg-warning float-end mt-1">${porLeer}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item mt-4">
+                            <a class="nav-link" href="#">
+                                <i class="bi bi-gear"></i> Configuración
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-danger" href="#">
+                                <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Contenido principal - Vista de Perfil -->
+            <div class="col-lg-10">
+                <div class="main-content">
+                    <!-- Encabezado del perfil -->
+                    <div class="profile-header text-center">
+                        <div class="profile-avatar">${not empty sessionScope.usuario ? sessionScope.usuario.charAt(0) : 'U'}</div>
+                        <h2>${sessionScope.usuario != null ? sessionScope.usuario : 'Usuario'}</h2>
+                        <p class="text-white">Lector/a · ${totalTerminados} libros leídos</p>
+                        
+                        <div class="profile-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">${totalTerminados}</div>
+                                <div class="stat-label">Terminados</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">${totalFavoritos}</div>
+                                <div class="stat-label">Favoritos</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">${porLeer}</div>
+                                <div class="stat-label">Por Leer</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <!-- Columna izquierda - Estadísticas y actividad -->
+                        <div class="col-lg-8">
+                            <!-- Estadísticas de lectura -->
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="stats-card stats-finished">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h5>Total Libros</h5>
+                                                <h2>${totalTerminados + porLeer}</h2>
+                                            </div>
+                                            <i class="bi bi-book" style="font-size: 2.5rem;"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="stats-card stats-goal">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h5>Objetivo Anual</h5>
+                                                <h2>${objetivoAnual} libros</h2>
+                                            </div>
+                                            <i class="bi bi-flag" style="font-size: 2.5rem;"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Progreso de lectura -->
+                            <div class="reading-goal">
+                                <h5 class="mb-3">Progreso de lectura anual</h5>
+                                <div class="progress-text">
+                                    <span>${progresoAnual} de ${objetivoAnual} libros</span>
+                                    <span>${(progresoAnual / objetivoAnual * 100)}%</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-custom" 
+                                         style="width: ${(progresoAnual / objetivoAnual * 100)}%;"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Actividad reciente -->
+                            <h3 class="section-title">Actividad Reciente</h3>
+                            <ul class="recent-activity">
+                                <c:forEach items="${actividadReciente}" var="actividad">
+                                    <li>
+                                        <div class="activity-icon">
+                                            <c:choose>
+                                                <c:when test="${actividad.tipo == 'TERMINADO'}">
+                                                    <i class="bi bi-check-circle"></i>
+                                                </c:when>
+                                                <c:when test="${actividad.tipo == 'FAVORITO'}">
+                                                    <i class="bi bi-heart-fill"></i>
+                                                </c:when>
+                                                <c:when test="${actividad.tipo == 'AGREGADO'}">
+                                                    <i class="bi bi-plus-circle"></i>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <i class="bi bi-book"></i>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </div>
+                                        <div class="activity-content">
+                                            <div class="text-white">${actividad.descripcion}</div>
+                                            <div class="activity-time">${actividad.fecha}</div>
+                                            
+                                            <c:if test="${not empty actividad.libro}">
+                                                <div class="book-mini-card">
+                                                    <div class="book-mini-cover" style="background-color: ${actividad.libro.color};">
+                                                        <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: white; font-weight: bold;">
+                                                            ${fn:substring(actividad.libro.titulo, 0, 2)}
+                                                        </div>
+                                                    </div>
+                                                    <div class="book-mini-info">
+                                                        <h6 class="book-mini-title">${actividad.libro.titulo}</h6>
+                                                        <p class="book-mini-author">${actividad.libro.autor}</p>
+                                                    </div>
+                                                </div>
+                                            </c:if>
+                                        </div>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </div>
+                        
+                        <!-- Columna derecha - Configuración de perfil -->
+                        <div class="col-lg-4">
+                            <h3 class="section-title">Configuración de Perfil</h3>
+                            
+                            <div class="card bg-transparent border-light mb-4">
+                                <div class="card-body">
+                                    <form id="profileForm">
+                                        <div class="mb-3">
+                                            <label class="form-label">Foto de perfil</label>
+                                            <div class="d-flex align-items-center">
+                                                <div class="profile-avatar me-3" style="width: 80px; height: 80px; font-size: 2rem;">
+                                                    ${not empty sessionScope.usuario ? sessionScope.usuario.charAt(0) : 'U'}
+                                                </div>
+                                                <div>
+                                                    <button type="button" class="btn btn-outline-light btn-sm" id="changePhotoBtn">Cambiar foto</button>
+                                                    <button type="button" class="btn btn-outline-danger btn-sm mt-2" id="removePhotoBtn">Eliminar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label class="form-label">Nombre completo</label>
+                                            <input type="text" class="form-control form-control-custom" 
+                                                   value="${usuario.nombreCompleto != null ? usuario.nombreCompleto : 'Nombre del usuario'}" 
+                                                   name="nombreCompleto">
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label class="form-label">Correo electrónico</label>
+                                            <input type="email" class="form-control form-control-custom" 
+                                                   value="${usuario.email != null ? usuario.email : 'usuario@ejemplo.com'}" 
+                                                   name="email">
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label class="form-label">Nombre de usuario</label>
+                                            <input type="text" class="form-control form-control-custom" 
+                                                   value="${sessionScope.usuario != null ? sessionScope.usuario : 'Usuario'}" 
+                                                   name="username">
+                                        </div>
+                                        
+                                        <div class="mb-4">
+                                            <label class="form-label">Objetivo de lectura anual</label>
+                                            <div class="input-group">
+                                                <input type="number" class="form-control form-control-custom" 
+                                                       value="${objetivoAnual}" 
+                                                       name="objetivoAnual">
+                                                <span class="input-group-text bg-transparent text-light border-light">libros</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="d-grid">
+                                            <button type="button" class="btn btn-save" id="saveProfileBtn">Guardar Cambios</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Guardar cambios
+        document.getElementById('saveProfileBtn').addEventListener('click', function() {
+            const nombre = document.querySelector('input[name="nombreCompleto"]').value;
+            alert(`Perfil actualizado correctamente: ${nombre}`);
+            
+            // Aquí normalmente se enviaría el formulario al servidor
+            // document.getElementById('profileForm').submit();
+        });
+        
+        // Cambiar foto de perfil
+        document.getElementById('changePhotoBtn').addEventListener('click', function() {
+            alert('Selecciona una nueva foto de perfil');
+            // Lógica para seleccionar y cargar una imagen
+        });
+        
+        // Eliminar foto de perfil
+        document.getElementById('removePhotoBtn').addEventListener('click', function() {
+            if(confirm('¿Eliminar la foto de perfil actual?')) {
+                alert('Foto de perfil eliminada');
+            }
+        });
+    </script>
+</body>
+</html>
