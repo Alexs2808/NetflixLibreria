@@ -63,24 +63,40 @@ public class UsuarioDao {
         coleccion.updateOne(filtro, nuevo);
     }
 
-public Usuario obtenerUsuarioPorId(String id) {
-    /*Document filtro = new Document("_id", new ObjectId(id));
-    Document doc = coleccion.find(filtro).first();
+    //buscar
 
-    if (doc != null) {
-        Usuario usuario = new Usuario(
-            doc.getString("nombre"),
-            doc.getString("apellidoPaterno"), // <- corregido
-            doc.getString("apellidoMaterno"),
-            doc.getDate("fechaNacimiento").toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate(),
-            doc.getString("correo"),
-            doc.getString("nombreUsuario"), // <- corregido
-            doc.getString("contrasenia")
-        );
-        usuario.setId(doc.getObjectId("_id"));
-        return usuario;
-    } else {*/
-        return null;
+    public Usuario obtenerUsuarioPorId(String id) {
+        Document filtro = new Document("_id", new ObjectId(id));
+        Document doc = coleccion.find(filtro).first();
+
+        Date fecha = doc.getDate("fechaNacimiento");
+
+        LocalDateTime fechaNacimiento = null;
+        if (fecha != null) {
+            fechaNacimiento = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        }
+
+        if (doc != null) {
+            Usuario usuario = new Usuario(
+                    doc.getString("nombre"),
+                    doc.getString("apellidoPaterno"), // <- corregido
+                    doc.getString("apellidoMaterno"),
+                    fechaNacimiento,
+                    doc.getString("correo"),
+                    doc.getString("nombreUsuario"), // <- corregido
+                    doc.getString("contrasenia")
+            );
+            usuario.setId(doc.getObjectId("_id"));
+            return usuario;
+        } else {
+            return null;
+        }
+    }
+
+    //eliminar
+    public void eliminarUsuario(String id) {
+        Document filtro = new Document("_id", new ObjectId(id));
+        coleccion.deleteOne(filtro);
     }
 }
 

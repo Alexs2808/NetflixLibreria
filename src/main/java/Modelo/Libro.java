@@ -1,14 +1,17 @@
 package Modelo;
 
+import org.bson.types.ObjectId;
+
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Libro {
-
+    private ObjectId id;
     private String nombreLibro;
     private String autor;
     private String editorial;
     private String categoria;
-    private LocalDate fechaPublicacion;
+    private LocalDateTime fechaPublicacion;
     private String estado; //leido, no leido
 
     public Libro() {
@@ -16,13 +19,21 @@ public class Libro {
     }
 
     public Libro(String nombreLibro, String autor, String editorial,
-                 String categoria, LocalDate fechaPublicacion, String estado) {
+                 String categoria, LocalDateTime fechaPublicacion, String estado) {
         this.nombreLibro = nombreLibro;
         this.autor = autor;
         this.editorial = editorial;
         this.categoria = categoria;
         this.fechaPublicacion = fechaPublicacion;
         this.estado = estado;
+    }
+
+    public ObjectId getId() {
+        return id;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
     }
 
     public String getNombreLibro() {
@@ -57,11 +68,11 @@ public class Libro {
         this.categoria = categoria;
     }
 
-    public LocalDate getFechaPublicacion() {
+    public LocalDateTime getFechaPublicacion() {
         return fechaPublicacion;
     }
 
-    public void setFechaPublicacion(LocalDate fechaPublicacion) {
+    public void setFechaPublicacion(LocalDateTime fechaPublicacion) {
         this.fechaPublicacion = fechaPublicacion;
     }
 
